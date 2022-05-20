@@ -58,10 +58,6 @@ public class Registers {
 			this.index = index;
 		}
 		
-		public int getIndex() {
-			return index;
-		}
-		
 		static RegisterNames getRegisterName(int index) {
 			return switch (index) {
 				case 0 -> x0;
@@ -98,6 +94,10 @@ public class Registers {
 				case 31 -> x31;
 				default -> throw new UnknownRegister(index);
 			};
+		}
+		
+		public int getIndex() {
+			return index;
 		}
 	}
 }
