@@ -1,5 +1,6 @@
 package instructions;
 
+import instructions.implemetations.Jal;
 import memory.Registers.RegisterNames;
 
 public abstract class InstructionJ extends InstructionU {
@@ -17,6 +18,6 @@ public abstract class InstructionJ extends InstructionU {
 								   bitMap.charAt(20) +
 								   new StringBuilder(bitMap.substring(21, 31)).reverse() + "0", 2);
 		
-		return null;
+		return new Jal(rd, imm);
 	}
 }
