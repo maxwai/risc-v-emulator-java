@@ -1,5 +1,12 @@
 package instructions;
 
+import exceptions.UnknownInstruction;
+import instructions.implemetations.Beq;
+import instructions.implemetations.Bge;
+import instructions.implemetations.Bgeu;
+import instructions.implemetations.Blt;
+import instructions.implemetations.Bltu;
+import instructions.implemetations.Bne;
 import memory.Registers.RegisterNames;
 
 public abstract class InstructionB extends InstructionS {
@@ -19,6 +26,14 @@ public abstract class InstructionB extends InstructionS {
 								   new StringBuilder(bitMap.substring(25, 31)).reverse() +
 								   new StringBuilder(bitMap.substring(8, 12)).reverse() + "0", 2);
 		
-		return null;
+		return switch (new StringBuilder(bitMap.substring(12, 15)).reverse().toString()) {
+			case "000" -> new Beq(rs1, rs2, imm);
+			case "001" -> new Bne(rs1, rs2, imm);
+			case "100" -> new Blt(rs1, rs2, imm);
+			case "101" -> new Bge(rs1, rs2, imm);
+			case "110" -> new Bltu(rs1, rs2, imm);
+			case "111" -> new Bgeu(rs1, rs2, imm);
+			default -> throw new UnknownInstruction(new StringBuilder(bitMap).reverse().toString());
+		};
 	}
 }
