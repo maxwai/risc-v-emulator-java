@@ -4,6 +4,11 @@ import exceptions.UnknownInstruction;
 import instructions.implemetations.Addi;
 import instructions.implemetations.Andi;
 import instructions.implemetations.Jalr;
+import instructions.implemetations.Lb;
+import instructions.implemetations.Lbu;
+import instructions.implemetations.Lh;
+import instructions.implemetations.Lhu;
+import instructions.implemetations.Lw;
 import instructions.implemetations.Ori;
 import instructions.implemetations.Slli;
 import instructions.implemetations.Slti;
@@ -38,17 +43,16 @@ public abstract class InstructionI implements Instruction {
 		
 		return switch (new StringBuilder(bitMap.substring(0, 7)).reverse().toString()) {
 			case "1100111" -> new Jalr(rd, rs1, imm);
-			case "0000011" -> {
-				switch (new StringBuilder(bitMap.substring(12, 15)).reverse().toString()) {
-					case "000" -> throw new RuntimeException("LB not yet implemented");
-					case "001" -> throw new RuntimeException("LH not yet implemented");
-					case "010" -> throw new RuntimeException("LW not yet implemented");
-					case "100" -> throw new RuntimeException("LBU not yet implemented");
-					case "101" -> throw new RuntimeException("LHU not yet implemented");
-					default -> throw new UnknownInstruction(
-							new StringBuilder(bitMap).reverse().toString());
-				}
-			}
+			case "0000011" ->
+					switch (new StringBuilder(bitMap.substring(12, 15)).reverse().toString()) {
+						case "000" -> new Lb(rd, rs1, imm);
+						case "001" -> new Lh(rd, rs1, imm);
+						case "010" -> new Lw(rd, rs1, imm);
+						case "100" -> new Lbu(rd, rs1, imm);
+						case "101" -> new Lhu(rd, rs1, imm);
+						default -> throw new UnknownInstruction(
+								new StringBuilder(bitMap).reverse().toString());
+					};
 			case "0010011" ->
 					switch (new StringBuilder(bitMap.substring(12, 15)).reverse().toString()) {
 						case "000" -> new Addi(rd, rs1, imm);
