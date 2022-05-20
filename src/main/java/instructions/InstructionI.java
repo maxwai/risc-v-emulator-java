@@ -23,7 +23,6 @@ public abstract class InstructionI implements Instruction {
 		this.imm = imm;
 	}
 	
-	@SuppressWarnings("ConstantConditions")
 	static InstructionI parseInstruction(String bitMap) {
 		RegisterNames rd = RegisterNames.getRegisterName(
 				Integer.parseInt("000" + new StringBuilder(bitMap.substring(7, 12)).reverse(),
