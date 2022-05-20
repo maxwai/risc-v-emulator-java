@@ -1,6 +1,5 @@
 package instructions.implemetations;
 
-import instructions.InstructionI;
 import instructions.InstructionR;
 import memory.Registers.RegisterNames;
 import visitors.InstructionVisitor;
