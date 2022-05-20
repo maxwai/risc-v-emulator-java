@@ -3,6 +3,7 @@ package instructions;
 import exceptions.UnknownInstruction;
 import instructions.implemetations.Addi;
 import instructions.implemetations.Andi;
+import instructions.implemetations.Jalr;
 import instructions.implemetations.Ori;
 import instructions.implemetations.Slli;
 import instructions.implemetations.Slti;
@@ -36,7 +37,7 @@ public abstract class InstructionI implements Instruction {
 										new StringBuilder(bitMap.substring(20, 25)).reverse(), 2);
 		
 		return switch (new StringBuilder(bitMap.substring(0, 7)).reverse().toString()) {
-			case "1100111" -> throw new RuntimeException("JALR not yet implemented");
+			case "1100111" -> new Jalr(rd, rs1, imm);
 			case "0000011" -> {
 				switch (new StringBuilder(bitMap.substring(12, 15)).reverse().toString()) {
 					case "000" -> throw new RuntimeException("LB not yet implemented");
