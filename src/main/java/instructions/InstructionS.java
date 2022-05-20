@@ -1,5 +1,14 @@
 package instructions;
 
+import exceptions.UnknownInstruction;
+import instructions.implemetations.Lb;
+import instructions.implemetations.Lbu;
+import instructions.implemetations.Lh;
+import instructions.implemetations.Lhu;
+import instructions.implemetations.Lw;
+import instructions.implemetations.Sb;
+import instructions.implemetations.Sh;
+import instructions.implemetations.Sw;
 import memory.Registers.RegisterNames;
 
 public abstract class InstructionS implements Instruction {
@@ -24,7 +33,13 @@ public abstract class InstructionS implements Instruction {
 								   new StringBuilder(bitMap.substring(25, 31)).reverse() +
 								   new StringBuilder(bitMap.substring(7, 12)).reverse(), 2);
 		
-		return null;
+		return switch (new StringBuilder(bitMap.substring(12, 15)).reverse().toString()) {
+			case "000" -> new Sb(rs1, rs2, imm);
+			case "001" -> new Sh(rs1, rs2, imm);
+			case "010" -> new Sw(rs1, rs2, imm);
+			default -> throw new UnknownInstruction(
+					new StringBuilder(bitMap).reverse().toString());
+		};
 	}
 	
 	public RegisterNames rs1() {
