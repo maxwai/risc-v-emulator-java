@@ -10,6 +10,11 @@ Emulator that I am starting to programm to execute RISC-V Instructions
 
 For now only 32-bit address spaces are supported, XLEN=32 is fixed
 
+The `FENCE` Instruction will do nothing since this would do nothing since the Emulator is alone on
+the memory.
+
+The `ECALL` and `EBREAK` will do nothing since Environment Calls are not present.
+
 ## Specification
 
 Specification used:

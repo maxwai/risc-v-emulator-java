@@ -3,6 +3,9 @@ package instructions;
 import exceptions.UnknownInstruction;
 import instructions.implemetations.Addi;
 import instructions.implemetations.Andi;
+import instructions.implemetations.Ebreak;
+import instructions.implemetations.Ecall;
+import instructions.implemetations.Fence;
 import instructions.implemetations.Jalr;
 import instructions.implemetations.Lb;
 import instructions.implemetations.Lbu;
@@ -71,15 +74,13 @@ public abstract class InstructionI implements Instruction {
 						default -> throw new UnknownInstruction(
 								new StringBuilder(bitMap).reverse().toString());
 					};
-			case "0001111" -> throw new RuntimeException("FENCE not yet implemented");
-			case "1110011" -> {
-				switch (bitMap.charAt(20)) {
-					case '0' -> throw new RuntimeException("ECALL not yet implemented");
-					case '1' -> throw new RuntimeException("EBREAK not yet implemented");
-					default -> throw new UnknownInstruction(
-							new StringBuilder(bitMap).reverse().toString());
-				}
-			}
+			case "0001111" -> new Fence(rd, rs1, imm);
+			case "1110011" -> switch (bitMap.charAt(20)) {
+				case '0' -> new Ecall(rd, rs1, imm);
+				case '1' -> new Ebreak(rd, rs1, imm);
+				default -> throw new UnknownInstruction(
+						new StringBuilder(bitMap).reverse().toString());
+			};
 			default -> throw new UnknownInstruction(new StringBuilder(bitMap).reverse().toString());
 		};
 	}
