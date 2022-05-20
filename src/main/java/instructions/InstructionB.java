@@ -8,7 +8,7 @@ public abstract class InstructionB extends InstructionS {
 		super(rs1, rs2, imm);
 	}
 	
-	static InstructionI parseInstruction(String bitMap) {
+	static InstructionB parseInstruction(String bitMap) {
 		RegisterNames rs1 = RegisterNames.getRegisterName(
 				Integer.parseInt("000" + new StringBuilder(bitMap.substring(15, 20)).reverse(),
 						2));

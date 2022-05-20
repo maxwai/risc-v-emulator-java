@@ -13,7 +13,7 @@ public abstract class InstructionS implements Instruction {
 		this.imm = imm;
 	}
 	
-	static InstructionI parseInstruction(String bitMap) {
+	static InstructionS parseInstruction(String bitMap) {
 		RegisterNames rs1 = RegisterNames.getRegisterName(
 				Integer.parseInt("000" + new StringBuilder(bitMap.substring(15, 20)).reverse(),
 						2));

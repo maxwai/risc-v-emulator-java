@@ -12,7 +12,7 @@ public abstract class InstructionU implements Instruction {
 		this.imm = imm;
 	}
 	
-	static InstructionI parseInstruction(String bitMap) {
+	static InstructionU parseInstruction(String bitMap) {
 		RegisterNames rd = RegisterNames.getRegisterName(
 				Integer.parseInt("000" + new StringBuilder(bitMap.substring(7, 12)).reverse(),
 						2));
