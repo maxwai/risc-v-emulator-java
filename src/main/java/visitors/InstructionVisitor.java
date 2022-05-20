@@ -11,6 +11,8 @@ import instructions.implemetations.Bgeu;
 import instructions.implemetations.Blt;
 import instructions.implemetations.Bltu;
 import instructions.implemetations.Bne;
+import instructions.implemetations.Div;
+import instructions.implemetations.Divu;
 import instructions.implemetations.Ebreak;
 import instructions.implemetations.Ecall;
 import instructions.implemetations.Fence;
@@ -22,8 +24,14 @@ import instructions.implemetations.Lh;
 import instructions.implemetations.Lhu;
 import instructions.implemetations.Lui;
 import instructions.implemetations.Lw;
+import instructions.implemetations.Mul;
+import instructions.implemetations.Mulh;
+import instructions.implemetations.Mulhsu;
+import instructions.implemetations.Mulhu;
 import instructions.implemetations.Or;
 import instructions.implemetations.Ori;
+import instructions.implemetations.Rem;
+import instructions.implemetations.Remu;
 import instructions.implemetations.Sb;
 import instructions.implemetations.Sh;
 import instructions.implemetations.Sll;
@@ -65,6 +73,10 @@ public interface InstructionVisitor {
 	
 	void visit(Bne bne);
 	
+	void visit(Div div);
+	
+	void visit(Divu divu);
+	
 	void visit(Ebreak ebreak);
 	
 	void visit(Ecall ecall);
@@ -87,9 +99,21 @@ public interface InstructionVisitor {
 	
 	void visit(Lw lw);
 	
+	void visit(Mul mul);
+	
+	void visit(Mulh mulh);
+	
+	void visit(Mulhsu mulhsu);
+	
+	void visit(Mulhu mulhu);
+	
 	void visit(Or or);
 	
 	void visit(Ori ori);
+	
+	void visit(Rem rem);
+	
+	void visit(Remu remu);
 	
 	void visit(Sb sb);
 	
