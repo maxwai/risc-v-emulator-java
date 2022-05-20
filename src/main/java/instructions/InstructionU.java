@@ -1,5 +1,8 @@
 package instructions;
 
+import exceptions.UnknownInstruction;
+import instructions.implemetations.Auipc;
+import instructions.implemetations.Lui;
 import memory.Registers.RegisterNames;
 
 public abstract class InstructionU implements Instruction {
@@ -18,8 +21,11 @@ public abstract class InstructionU implements Instruction {
 						2));
 		int imm = Integer.parseInt(new StringBuilder(bitMap.substring(12, 32)).reverse() +
 								   "0".repeat(12), 2);
-		
-		return null;
+		return switch (new StringBuilder(bitMap.substring(0, 7)).reverse().toString()) {
+			case "0110111" -> new Lui(rd, imm);
+			case "0010111" -> new Auipc(rd, imm);
+			default -> throw new UnknownInstruction(new StringBuilder(bitMap).reverse().toString());
+		};
 	}
 	
 	public RegisterNames rd() {

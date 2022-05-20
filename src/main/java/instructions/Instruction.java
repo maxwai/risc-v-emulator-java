@@ -19,7 +19,7 @@ public interface Instruction {
 	static Instruction parseInstruction(int instruction) {
 		String bitMap = byteArrayToBitString(instruction);
 		return switch (new StringBuilder(bitMap.substring(0, 7)).reverse().toString()) {
-			case "0110111" -> InstructionU.parseInstruction(bitMap);
+			case "0110111", "0010111" -> InstructionU.parseInstruction(bitMap);
 			case "1101111" -> InstructionJ.parseInstruction(bitMap);
 			case "1100111", "0000011", "0010011", "0001111", "1110011" ->
 					InstructionI.parseInstruction(bitMap);
