@@ -9,6 +9,14 @@ public abstract class InstructionJ extends InstructionU {
 	}
 	
 	static InstructionI parseInstruction(String bitMap) {
+		RegisterNames rd = RegisterNames.getRegisterName(
+				Integer.parseInt("000" + new StringBuilder(bitMap.substring(7, 12)).reverse(),
+						2));
+		int imm = Integer.parseInt(bitMap.substring(31, 32).repeat(12) +
+								   new StringBuilder(bitMap.substring(12, 20)).reverse() +
+								   bitMap.charAt(20) +
+								   new StringBuilder(bitMap.substring(21, 31)).reverse() + "0", 2);
+		
 		return null;
 	}
 }

@@ -13,6 +13,12 @@ public abstract class InstructionU implements Instruction {
 	}
 	
 	static InstructionI parseInstruction(String bitMap) {
+		RegisterNames rd = RegisterNames.getRegisterName(
+				Integer.parseInt("000" + new StringBuilder(bitMap.substring(7, 12)).reverse(),
+						2));
+		int imm = Integer.parseInt(new StringBuilder(bitMap.substring(12, 32)).reverse() +
+								   "0".repeat(12), 2);
+		
 		return null;
 	}
 	

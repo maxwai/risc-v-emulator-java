@@ -14,6 +14,15 @@ public abstract class InstructionI implements Instruction {
 	}
 	
 	static InstructionI parseInstruction(String bitMap) {
+		RegisterNames rd = RegisterNames.getRegisterName(
+				Integer.parseInt("000" + new StringBuilder(bitMap.substring(7, 12)).reverse(),
+						2));
+		RegisterNames rs1 = RegisterNames.getRegisterName(
+				Integer.parseInt("000" + new StringBuilder(bitMap.substring(15, 20)).reverse(),
+						2));
+		int imm = Integer.parseInt(bitMap.substring(31, 32).repeat(21) +
+								   new StringBuilder(bitMap.substring(20, 31)).reverse(), 2);
+		
 		return null;
 	}
 	
