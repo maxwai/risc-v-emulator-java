@@ -1,5 +1,6 @@
 package memory;
 
+import exceptions.UnknownRegister;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,6 +60,44 @@ public class Registers {
 		
 		public int getIndex() {
 			return index;
+		}
+		
+		static RegisterNames getRegisterName(int index) {
+			return switch (index) {
+				case 0 -> x0;
+				case 1 -> x1;
+				case 2 -> x2;
+				case 3 -> x3;
+				case 4 -> x4;
+				case 5 -> x5;
+				case 6 -> x6;
+				case 7 -> x7;
+				case 8 -> x8;
+				case 9 -> x9;
+				case 10 -> x10;
+				case 11 -> x11;
+				case 12 -> x12;
+				case 13 -> x13;
+				case 14 -> x14;
+				case 15 -> x15;
+				case 16 -> x16;
+				case 17 -> x17;
+				case 18 -> x18;
+				case 19 -> x19;
+				case 20 -> x20;
+				case 21 -> x21;
+				case 22 -> x22;
+				case 23 -> x23;
+				case 24 -> x24;
+				case 25 -> x25;
+				case 26 -> x26;
+				case 27 -> x27;
+				case 28 -> x28;
+				case 29 -> x29;
+				case 30 -> x30;
+				case 31 -> x31;
+				default -> throw new UnknownRegister(index);
+			};
 		}
 	}
 }
