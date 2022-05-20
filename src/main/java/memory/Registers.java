@@ -58,7 +58,7 @@ public class Registers {
 			this.index = index;
 		}
 		
-		static RegisterNames getRegisterName(int index) {
+		public static RegisterNames getRegisterName(int index) {
 			return switch (index) {
 				case 0 -> x0;
 				case 1 -> x1;
