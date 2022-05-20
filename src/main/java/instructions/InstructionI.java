@@ -1,5 +1,15 @@
 package instructions;
 
+import exceptions.UnknownInstruction;
+import instructions.implemetations.Addi;
+import instructions.implemetations.Andi;
+import instructions.implemetations.Ori;
+import instructions.implemetations.Slli;
+import instructions.implemetations.Slti;
+import instructions.implemetations.Sltiu;
+import instructions.implemetations.Srai;
+import instructions.implemetations.Srli;
+import instructions.implemetations.Xori;
 import memory.Registers.RegisterNames;
 
 public abstract class InstructionI implements Instruction {
@@ -13,6 +23,7 @@ public abstract class InstructionI implements Instruction {
 		this.imm = imm;
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	static InstructionI parseInstruction(String bitMap) {
 		RegisterNames rd = RegisterNames.getRegisterName(
 				Integer.parseInt("000" + new StringBuilder(bitMap.substring(7, 12)).reverse(),
@@ -22,8 +33,51 @@ public abstract class InstructionI implements Instruction {
 						2));
 		int imm = Integer.parseInt(bitMap.substring(31, 32).repeat(21) +
 								   new StringBuilder(bitMap.substring(20, 31)).reverse(), 2);
+		int immSpezial = Byte.parseByte("0".repeat(3) +
+										new StringBuilder(bitMap.substring(20, 25)).reverse(), 2);
 		
-		return null;
+		return switch (new StringBuilder(bitMap.substring(0, 7)).reverse().toString()) {
+			case "1100111" -> throw new RuntimeException("JALR not yet implemented");
+			case "0000011" -> {
+				switch (new StringBuilder(bitMap.substring(12, 15)).reverse().toString()) {
+					case "000" -> throw new RuntimeException("LB not yet implemented");
+					case "001" -> throw new RuntimeException("LH not yet implemented");
+					case "010" -> throw new RuntimeException("LW not yet implemented");
+					case "100" -> throw new RuntimeException("LBU not yet implemented");
+					case "101" -> throw new RuntimeException("LHU not yet implemented");
+					default -> throw new UnknownInstruction(
+							new StringBuilder(bitMap).reverse().toString());
+				}
+			}
+			case "0010011" ->
+					switch (new StringBuilder(bitMap.substring(12, 15)).reverse().toString()) {
+						case "000" -> new Addi(rd, rs1, imm);
+						case "010" -> new Slti(rd, rs1, imm);
+						case "011" -> new Sltiu(rd, rs1, imm);
+						case "100" -> new Xori(rd, rs1, imm);
+						case "110" -> new Ori(rd, rs1, imm);
+						case "111" -> new Andi(rd, rs1, imm);
+						case "001" -> new Slli(rd, rs1, immSpezial);
+						case "101" -> switch (bitMap.charAt(30)) {
+							case '0' -> new Srli(rd, rs1, immSpezial);
+							case '1' -> new Srai(rd, rs1, immSpezial);
+							default -> throw new UnknownInstruction(
+									new StringBuilder(bitMap).reverse().toString());
+						};
+						default -> throw new UnknownInstruction(
+								new StringBuilder(bitMap).reverse().toString());
+					};
+			case "0001111" -> throw new RuntimeException("FENCE not yet implemented");
+			case "1110011" -> {
+				switch (bitMap.charAt(20)) {
+					case '0' -> throw new RuntimeException("ECALL not yet implemented");
+					case '1' -> throw new RuntimeException("EBREAK not yet implemented");
+					default -> throw new UnknownInstruction(
+							new StringBuilder(bitMap).reverse().toString());
+				}
+			}
+			default -> throw new UnknownInstruction(new StringBuilder(bitMap).reverse().toString());
+		};
 	}
 	
 	public RegisterNames rd() {
