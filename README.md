@@ -26,4 +26,4 @@ Specification used:
 Following Instructions are planned on being implemented for the moment:
 
 - RV32I Base Instruction Set
-- Rv32M Standard Extension
+- RV32M Standard Extension
